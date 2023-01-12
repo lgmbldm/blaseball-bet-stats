@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Blaseball Bet Stats</title>
+	<script src="script.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+  <div>
+    Season ID: <input type="text" id="season"></input><button onClick="generateLinks()">Generate Links</button>
+    <div id="links"></div>
+  </div>
+  <div>paste here &darr;</div>
+  <textarea cols="50" rows="10"></textarea>
+  <textarea cols="50" rows="10"></textarea>
+  <textarea cols="50" rows="10"></textarea>
+  <textarea cols="50" rows="10"></textarea>
+  <textarea cols="50" rows="10"></textarea>
+  <br>
+  <button class="bigButton" onClick="parseInput()">then click this</button>
+  <br><br>
+  <div id="error">
+
+  </div>
+  <div style="display: none;" id="results">
+    <div>Number of Bets: <span id="numBets"></span></div>
+    <div>Total Bet Amount: <span id="totalBet"></span></div>
+    <div>Total Payout: <span id="totalPayout"></span></div>
+    <div>Net Payout: <span id="netPayout"></span></div>
+    <div>Win%: <span id="winPct"></span>%</div>
+    <br>
+    <div>Number of Underdog Bets: <span id="numUnderdogBets"></span></div>
+    <div>Total Underdog Bet Amount: <span id="totalUnderdogBet"></span></div>
+    <div>Total Underdog Payout: <span id="totalUnderdogPayout"></span></div>
+    <div>Underdog Net Payout: <span id="netUnderdogPayout"></span></div>
+    <div>Underdog Win%: <span id="winPctUnderdog"></span>%</div>
+    <br>
+    <div>Number of Overdog Bets: <span id="numOverdogBets"></span></div>
+    <div>Total Overdog Bet Amount: <span id="totalOverdogBet"></span></div>
+    <div>Total Overdog Payout: <span id="totalOverdogPayout"></span></div>
+    <div>Overdog Net Payout: <span id="netOverdogPayout"></span></div>
+    <div>Overdog Win%: <span id="winPctOverdog"></span>%</div>
+  </div>
+</body>
+</html>
