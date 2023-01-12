@@ -1,3 +1,20 @@
+window.loadLocalStorage = () => {
+  const season = window.localStorage.getItem("season");
+  if (season) {
+    document.getElementById("season").value = season;
+  }
+  const jsons = window.localStorage.getItem("jsons");
+  if (jsons) {
+    const jsonParts = jsons.split("|||");
+    console.log(jsonParts);
+    Array.from(document.querySelectorAll("textarea")).forEach((e, i) => {
+      if (i < jsonParts.length) {
+        e.value = jsonParts[i];
+      }
+    });
+  }
+};
+
 window.parseInput = async () => {
   const getBetStats = (betDatas) => {
     const numBets = betDatas.length;
@@ -15,6 +32,7 @@ window.parseInput = async () => {
     const inputValues = Array.from(document.querySelectorAll("textarea")).map(
       (textarea) => textarea.value
     );
+    window.localStorage.setItem("jsons", inputValues.join("|||"));
     let parsedJson = [];
     for (const inputValue of inputValues) {
       if (inputValue) {
@@ -22,9 +40,9 @@ window.parseInput = async () => {
         parsedJson = parsedJson.concat(parsedInputValue);
       }
     }
-    console.log(parsedJson);
     document.getElementById("results").style.display = "block";
     document.getElementById("error").innerText = "";
+
     const betDatas = parsedJson
       .flatMap((item) => item.betDatas)
       .filter(
@@ -38,9 +56,8 @@ window.parseInput = async () => {
           ? betData.homeTeamBetData
           : betData.awayTeamBetData
       );
-    const [numBets, numWins, totalBet, totalPayout, winPct] = getBetStats(
-      betDatas
-    );
+    const [numBets, numWins, totalBet, totalPayout, winPct] =
+      getBetStats(betDatas);
     document.getElementById("numBets").innerText = numBets;
     document.getElementById("winPct").innerText = winPct;
     document.getElementById("totalBet").innerText = totalBet;
@@ -55,14 +72,13 @@ window.parseInput = async () => {
       numUnderdogWins,
       totalUnderdogBet,
       totalUnderdogPayout,
-      winPctUnderdog
+      winPctUnderdog,
     ] = getBetStats(underdogBets);
     document.getElementById("numUnderdogBets").innerText = numUnderdogBets;
     document.getElementById("winPctUnderdog").innerText = winPctUnderdog;
     document.getElementById("totalUnderdogBet").innerText = totalUnderdogBet;
-    document.getElementById(
-      "totalUnderdogPayout"
-    ).innerText = totalUnderdogPayout;
+    document.getElementById("totalUnderdogPayout").innerText =
+      totalUnderdogPayout;
     document.getElementById("netUnderdogPayout").innerText =
       totalUnderdogPayout - totalUnderdogBet;
 
@@ -72,14 +88,13 @@ window.parseInput = async () => {
       numOverdogWins,
       totalOverdogBet,
       totalOverdogPayout,
-      winPctOverdog
+      winPctOverdog,
     ] = getBetStats(overdogBets);
     document.getElementById("numOverdogBets").innerText = numOverdogBets;
     document.getElementById("winPctOverdog").innerText = winPctOverdog;
     document.getElementById("totalOverdogBet").innerText = totalOverdogBet;
-    document.getElementById(
-      "totalOverdogPayout"
-    ).innerText = totalOverdogPayout;
+    document.getElementById("totalOverdogPayout").innerText =
+      totalOverdogPayout;
     document.getElementById("netOverdogPayout").innerText =
       totalOverdogPayout - totalOverdogBet;
   } catch (e) {
@@ -92,6 +107,7 @@ window.generateLinks = () => {
   const linksDiv = document.getElementById("links");
   linksDiv.innerHTML = "";
   const season = document.getElementById("season").value;
+  window.localStorage.setItem("season", season);
   const today = new Date();
   const todayDay = today.getDay();
   const dayDiff = today.getDate() - todayDay + (todayDay == 0 ? -6 : 1); // adjust when day is sunday
@@ -103,4 +119,3 @@ window.generateLinks = () => {
     date.setDate(date.getDate() + 1);
   }
 };
-
