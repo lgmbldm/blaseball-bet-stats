@@ -105,7 +105,7 @@ window.parseInput = async () => {
 
 window.generateLinks = () => {
   const linksDiv = document.getElementById("links");
-  linksDiv.innerHTML = "";
+  linksDiv.innerHTML = "Right click and open these in new tabs <br>";
   const season = document.getElementById("season").value;
   window.localStorage.setItem("season", season);
   const today = new Date();
