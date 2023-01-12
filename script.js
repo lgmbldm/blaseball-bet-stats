@@ -112,7 +112,7 @@ window.generateLinks = () => {
   const todayDay = today.getDay();
   const dayDiff = today.getDate() - todayDay + (todayDay == 0 ? -6 : 1); // adjust when day is sunday
   const date = new Date(today.setDate(dayDiff));
-  for (let x = 0; x < 5; x++) {
+  for (let x = 0; x < 6; x++) {
     const formattedDate = date.toISOString().split("T")[0];
     const url = `https://api2.blaseball.com//schedule/${season}/${formattedDate}/hourly?timezone=America/New_York`;
     linksDiv.innerHTML += `<a href='${url}' target='_blank'>${url}</a><br>`;
