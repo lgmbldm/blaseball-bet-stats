@@ -120,8 +120,10 @@ window.generateLinks = () => {
   const dayDiff = today.getDate() - todayDay + (todayDay == 0 ? -6 : 1); // adjust when day is sunday
   const date = new Date(today.setDate(dayDiff));
   for (let x = 0; x < 6; x++) {
-    const formattedDate = date.toISOString().split("T")[0];
-    const url = `https://api2.blaseball.com//schedule/${season}/${formattedDate}/hourly?timezone=America/New_York`;
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+    const url = `https://api2.blaseball.com/schedule/${season}/${formattedDate}/hourly?timezone=America/New_York`;
     linksDiv.innerHTML += `<a href='${url}' target='_blank'>${url}</a><br>`;
     date.setDate(date.getDate() + 1);
   }
