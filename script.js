@@ -6,7 +6,6 @@ window.loadLocalStorage = () => {
   const jsons = window.localStorage.getItem("jsons");
   if (jsons) {
     const jsonParts = jsons.split("|||");
-    console.log(jsonParts);
     Array.from(document.querySelectorAll("textarea")).forEach((e, i) => {
       if (i < jsonParts.length) {
         e.value = jsonParts[i];
