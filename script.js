@@ -26,7 +26,9 @@ window.parseInput = async () => {
       .map((betData) => (betData.teamWon ? betData.userBetPayout : 0))
       .reduce((a, b) => a + b, 0);
     const winPct = Math.round((numWins / numBets) * 1000) / 10;
-    return [numBets, numWins, totalBet, totalPayout, winPct];
+    const avgPayout =
+      Math.round(((totalPayout - totalBet) / numBets) * 10) / 10;
+    return [numBets, numWins, totalBet, totalPayout, winPct, avgPayout];
   };
   try {
     const inputValues = Array.from(document.querySelectorAll("textarea")).map(
@@ -56,13 +58,14 @@ window.parseInput = async () => {
           ? betData.homeTeamBetData
           : betData.awayTeamBetData
       );
-    const [numBets, numWins, totalBet, totalPayout, winPct] =
+    const [numBets, numWins, totalBet, totalPayout, winPct, avgPayout] =
       getBetStats(betDatas);
     document.getElementById("numBets").innerText = numBets;
     document.getElementById("winPct").innerText = winPct;
     document.getElementById("totalBet").innerText = totalBet;
     document.getElementById("totalPayout").innerText = totalPayout;
     document.getElementById("netPayout").innerText = totalPayout - totalBet;
+    document.getElementById("avgPayout").innerText = avgPayout;
 
     const underdogBets = betDatas.filter(
       (betData) => betData.userBetOdds < 0.5
@@ -73,6 +76,7 @@ window.parseInput = async () => {
       totalUnderdogBet,
       totalUnderdogPayout,
       winPctUnderdog,
+      avgUnderdogPayout,
     ] = getBetStats(underdogBets);
     document.getElementById("numUnderdogBets").innerText = numUnderdogBets;
     document.getElementById("winPctUnderdog").innerText = winPctUnderdog;
@@ -81,6 +85,7 @@ window.parseInput = async () => {
       totalUnderdogPayout;
     document.getElementById("netUnderdogPayout").innerText =
       totalUnderdogPayout - totalUnderdogBet;
+    document.getElementById("avgUnderdogPayout").innerText = avgUnderdogPayout;
 
     const overdogBets = betDatas.filter((betData) => betData.userBetOdds > 0.5);
     const [
@@ -89,6 +94,7 @@ window.parseInput = async () => {
       totalOverdogBet,
       totalOverdogPayout,
       winPctOverdog,
+      avgOverdogPayout,
     ] = getBetStats(overdogBets);
     document.getElementById("numOverdogBets").innerText = numOverdogBets;
     document.getElementById("winPctOverdog").innerText = winPctOverdog;
@@ -97,6 +103,7 @@ window.parseInput = async () => {
       totalOverdogPayout;
     document.getElementById("netOverdogPayout").innerText =
       totalOverdogPayout - totalOverdogBet;
+    document.getElementById("avgOverdogPayout").innerText = avgOverdogPayout;
   } catch (e) {
     console.log(e);
     document.getElementById("error").innerText = "error, check console logs";
