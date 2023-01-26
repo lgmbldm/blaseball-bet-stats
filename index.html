@@ -6,10 +6,14 @@
   <script>
     window.setTimeout(window.loadLocalStorage, 200);
     </script>
+    <script type="module">
+      await window.loadCurrentSeasonID();
+    </script>
 </head>
 <body>
   <div>
     Season ID: <input type="text" id="season"></input><button onClick="generateLinks()">Generate Links</button>
+    <div>Current Season: <span id="currentSeason">loading...</span></div>
     <div id="links"></div>
   </div>
   <div id="instructions">paste here &darr;</div>

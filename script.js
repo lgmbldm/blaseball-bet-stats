@@ -111,7 +111,8 @@ window.parseInput = async () => {
 
 window.generateLinks = () => {
   const linksDiv = document.getElementById("links");
-  linksDiv.innerHTML = "Right click and open these in new tabs <br>";
+  linksDiv.innerHTML =
+    "Right click and open these in new tabs or copy/paste the url to avoid an Unauthorized error <br>";
   const season = document.getElementById("season").value;
   window.localStorage.setItem("season", season);
   const today = new Date();
@@ -126,4 +127,20 @@ window.generateLinks = () => {
     linksDiv.innerHTML += `<a href='${url}' target='_blank'>${url}</a><br>`;
     date.setDate(date.getDate() + 1);
   }
+};
+
+window.setSeasonID = (seasonID) => {
+  document.getElementById("season").value = seasonID;
+  return false;
+};
+
+window.loadCurrentSeasonID = async () => {
+  const data = await fetch(
+    "https://api2.sibr.dev/chronicler/v0/entities?kind=sim"
+  );
+  const json = await data.json();
+  const currentSeason = json.items[0].data.simData.currentSeasonId;
+  document.getElementById(
+    "currentSeason"
+  ).innerHTML = `<a href="whydoIneedthisjusttomakethefakelinklookright" onclick='return window.setSeasonID("${currentSeason}")'>${currentSeason}</a>`;
 };
